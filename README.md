@@ -64,4 +64,4 @@ Github Link: 'link'
 
 Logo: '' 
 
-> Upload to [Here](https://github.com/itering/parachain-projects-info/tree/main/assets/images)
+> Upload to [Here](https://github.com/itering/parachain-projects-info/tree/main/assets/images).
