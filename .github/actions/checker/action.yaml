@@ -1,7 +1,7 @@
 name: "sign checker"
 description: "check sign"
 inputs:
-  github-token:
+  token:
     required: true
     description: Github Token
   filenames:

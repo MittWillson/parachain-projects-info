@@ -39,7 +39,7 @@ const main = async () => {
         return
     }
 
-    const githubToken = actions.getInput('github-token')
+    const githubToken = actions.getInput('token')
     const sha = actions.getInput('sha')
 
     const pr = await getPRContent(githubToken, sha)
