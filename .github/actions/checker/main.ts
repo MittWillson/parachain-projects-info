@@ -1,6 +1,7 @@
 const {cryptoWaitReady, decodeAddress, signatureVerify} = require('@polkadot/util-crypto');
 const {u8aToHex} = require('@polkadot/util');
 const actions = require('@actions/core')
+const {GitHub, context} = require('@actions/github')
 const fs = require('fs')
 
 const isValidSignature = (signedMessage, signature, address) => {
@@ -10,20 +11,36 @@ const isValidSignature = (signedMessage, signature, address) => {
     return signatureVerify(signedMessage, signature, hexPublicKey).isValid;
 };
 
+const getPRContent = async (token: string, sha: string) => {
+    const result = await new GitHub(token, {}).repos.listPullRequestsAssociatedWithCommit({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        commit_sha: sha,
+    });
+    const pullRequests = result.data.filter((pullRequest) => pullRequest.state === 'open');
+    if (pullRequests.length === 0) {
+        return null
+    }
+    let pr = pullRequests.length > 0 && pullRequests[0];
+    pullRequests.forEach(pullRequest => pullRequest.head.sha.startsWith(sha) && (pr = pullRequest));
+    return pr
+}
+
 const re = /The content signature is `([a-zA-Z\d ]+)` with account `([a-zA-Z\d ]+)`/
 
 const main = async () => {
-    const prContent: string = actions.getInput('prContent')
     const changes: string[] = actions.getInput('filenames').split('\r')
     // const changes: string[] = ['networks/polkadot/astar.json']
     if (changes.length === 0) {
         return
     }
 
-    console.log("changes", changes)
-    console.log("prContent", prContent)
+    const pr = await getPRContent(actions.getInput('github-token'), actions.getInput('sha'))
 
-    const result = re.exec(prContent)
+    console.log("changes", changes)
+    console.log("prContent", pr)
+
+    const result = re.exec(pr.body)
     if (!result || result.length !== 3) {
         actions.setFailed('the PR Content is not expected')
         return

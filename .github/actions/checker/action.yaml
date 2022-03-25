@@ -1,12 +1,12 @@
 name: "sign checker"
 description: "check sign"
 inputs:
+  github-token:
+    required: true
+    description: Github Token
   filenames:
     required: true
-    description: "filenames"
-  prContent:
-    required: true
-    description: "PR Content"
+    description: Changed Filenames
 runs:
   using: "composite"
   steps:
