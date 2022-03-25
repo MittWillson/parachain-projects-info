@@ -20,8 +20,11 @@ const main = async () => {
         return
     }
 
+    console.log("changes", changes)
+    console.log("prContent", prContent)
+
     const result = re.exec(prContent)
-    if (result.length !== 3) {
+    if (result && result.length !== 3) {
         actions.setFailed('the PR Content is not expected')
         return
     }
