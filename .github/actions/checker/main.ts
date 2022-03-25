@@ -29,7 +29,7 @@ const getPRContent = async (token: string, sha: string) => {
 const re = /The content signature is `([a-zA-Z\d ]+)` with account `([a-zA-Z\d ]+)`/
 
 const main = async () => {
-    const changes: string[] = actions.getInput('filenames').split('\r')
+    const changes: string[] = actions.getInput('filenames').split(' ')
     // const changes: string[] = ['networks/polkadot/astar.json']
     if (changes.length === 0) {
         return
