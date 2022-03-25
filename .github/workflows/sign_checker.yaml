@@ -16,5 +16,6 @@ jobs:
         uses: ./.github/actions/checker
         if: success() && steps.PR.outputs.number
         with:
+          sha: ${{ github.event.pull_request.head.sha }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           filenames: ${{ steps.changed-files.outputs.all_changed_files }}
