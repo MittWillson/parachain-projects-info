@@ -14,7 +14,7 @@ jobs:
 
       - name: Check signature
         uses: ./.github/actions/checker
-        if: success() && steps.PR.outputs.number
+        if: success()
         with:
           sha: ${{ github.event.pull_request.head.sha }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
