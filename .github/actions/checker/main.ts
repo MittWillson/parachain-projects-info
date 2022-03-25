@@ -12,7 +12,7 @@ const isValidSignature = (signedMessage, signature, address) => {
 };
 
 const getPRContent = async (token: string, sha: string) => {
-    const result = await new GitHub(token, {}).repos.listPullRequestsAssociatedWithCommit({
+    const result = await (GitHub(token, {})).repos.listPullRequestsAssociatedWithCommit({
         owner: context.repo.owner,
         repo: context.repo.repo,
         commit_sha: sha,
