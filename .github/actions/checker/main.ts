@@ -1,7 +1,9 @@
 const {cryptoWaitReady, decodeAddress, signatureVerify} = require('@polkadot/util-crypto');
 const {u8aToHex} = require('@polkadot/util');
 const actions = require('@actions/core')
-const {GitHub, context} = require('@actions/github')
+
+const {getOctokit, context} = require('@actions/github')
+
 const fs = require('fs')
 
 const isValidSignature = (signedMessage, signature, address) => {
@@ -12,7 +14,8 @@ const isValidSignature = (signedMessage, signature, address) => {
 };
 
 const getPRContent = async (token: string, sha: string) => {
-    const result = await (GitHub(token, {})).repos.listPullRequestsAssociatedWithCommit({
+    const octKit = getOctokit(token)
+    const result = await octKit.rest.repos.listPullRequestsAssociatedWithCommit({
         owner: context.repo.owner,
         repo: context.repo.repo,
         commit_sha: sha,
