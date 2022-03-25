@@ -4,6 +4,24 @@ inputs:
   filenames:
     required: true
     description: "filenames"
+  prContent:
+    required: true
+    description: "PR Content"
 runs:
-  using: node12
-  main: 'main.js'
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v2
+#    - uses: actions/cache@v3
+#      id: cache-dist
+#      with:
+#        path: dist
+#        key: dist
+    - run: |
+        cd ${{ github.action_path }}
+        if [[ ! -d dist ]]; then
+          npm install -g yarn
+          yarn && yarn build
+        fi;
+      shell: bash
+    - run: node ${{ github.action_path }}/dist/main.js
+      shell: bash

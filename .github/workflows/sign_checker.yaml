@@ -6,6 +6,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: 8BitJonny/gh-get-current-pr@1.4.0
+        id: PR
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: ${{ github.event.pull_request.head.sha }}
+          filterOutClosed: true
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v18.4
+        with:
+          path: networks
+
       - name: Check signature
         uses: ./.github/actions/checker
+        if: success() && steps.PR.outputs.number
+        with:
+          filenames: ${{ steps.changed-files.outputs.all_changed_files }}
+          prContent: ${{ steps.PR.outputs.pr_body }}
