@@ -10,7 +10,7 @@ const isValidSignature = (signedMessage, signature, address) => {
     return signatureVerify(signedMessage, signature, hexPublicKey).isValid;
 };
 
-const re = /The content signature is `([a-zA-Z\d ]+)` with account `([a-zA-Z\d ])`/
+const re = /The content signature is `([a-zA-Z\d ]+)` with account `([a-zA-Z\d ]+)`/
 
 const main = async () => {
     const prContent: string = actions.getInput('prContent')
@@ -24,7 +24,7 @@ const main = async () => {
     console.log("prContent", prContent)
 
     const result = re.exec(prContent)
-    if (result && result.length !== 3) {
+    if (!result || result.length !== 3) {
         actions.setFailed('the PR Content is not expected')
         return
     }
