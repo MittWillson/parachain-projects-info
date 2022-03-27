@@ -1,0 +1,53 @@
+name: Networks info updates
+on:
+  pull_request_target:
+    branches: [master, main]
+    types: [closed]
+    paths:
+      - networks
+      - assets
+
+jobs:
+  sync:
+    name: Sync Infos
+    if: github.event.pull_request.merged == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: subscan-explorer/ui
+          path: subscan-ui
+      - uses: actions/checkout@v3
+        with:
+          path: projects
+      - env:
+          UI_PATH: subscan-ui/src/assets/project-info
+        run: |
+          mkdir $UI_PATH
+          cp -rf projects/assets projects/networks $UI_PATH/
+          
+          
+          BOT_COMMIT_MESSAGE="Sync parachain projects info to ${GITHUB_SHA::7}."
+          BOT_COMMIT_DESCRIPTION="GitHub Actions Context:
+          * Actor: ${{ github.actor }}
+          * Git ref: ${{ github.ref }}
+          * Git commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+          * Workflow: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          "
+          BOT_BRANCH_SYNC="sync-${GITHUB_SHA::7}"
+          
+          cd subscan-ui
+          git add .
+          if git diff --staged --exit-code; then
+            echo "Nothing to commit."
+          else
+            git commit -m "$BOT_COMMIT_MESSAGE" -m "$BOT_COMMIT_DESCRIPTION"
+            git push origin HEAD:$BOT_BRANCH_SYNC
+            
+            curl \
+              -u -u ${{ secrets.GIT_USER }}:${{ secrets.GIT_TOKEN }} \
+              -X POST \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/subscan-explorer/ui/pulls \
+              -d '{"head":"$BOT_BRANCH_SYNC","base":"master","title":"$BOT_COMMIT_MESSAGE","body":"$BOT_COMMIT_DESCRIPTION"}'
+          fi
