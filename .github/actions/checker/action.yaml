@@ -20,6 +20,10 @@ runs:
 #        path: dist
 #        key: dist
     - run: |
+        bash -c "env | sort"
+        echo -------------
+      shell: bash
+    - run: |
         cd ${{ github.action_path }}
         if [[ ! -d dist ]]; then
           npm install -g yarn
