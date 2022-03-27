@@ -32,3 +32,7 @@ runs:
       shell: bash
     - run: node ${{ github.action_path }}/dist/main.js
       shell: bash
+      env:
+        INPUT_SHA: ${{ inputs.sha }}
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_FILENAMES: ${{ inputs.filenames }}
