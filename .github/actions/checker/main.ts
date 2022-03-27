@@ -14,7 +14,6 @@ const isValidSignature = (signedMessage, signature, address) => {
 };
 
 const getPRContent = async (token: string, sha: string) => {
-    console.log('getPRContent', token, sha)
     const octKit = getOctokit(token)
     const result = await octKit.rest.repos.listPullRequestsAssociatedWithCommit({
         owner: context.repo.owner,
@@ -39,17 +38,10 @@ const main = async () => {
         return
     }
 
-    console.log('changes', changes)
-
     const githubToken = actions.getInput('token')
     const sha = actions.getInput('sha')
 
-    console.log("main", githubToken, sha)
-
     const pr = await getPRContent(githubToken, sha)
-
-    console.log("changes", changes)
-    console.log("prContent", pr)
 
     const result = re.exec(pr.body)
     if (!result || result.length !== 3) {
@@ -60,6 +52,7 @@ const main = async () => {
     const signature = result[1]
     const owner = result[2]
 
+    console.log('result', signature, owner)
 
     await cryptoWaitReady();
     for (const change of changes) {
