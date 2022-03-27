@@ -39,6 +39,8 @@ const main = async () => {
         return
     }
 
+    console.log('changes', changes)
+
     const githubToken = actions.getInput('token')
     const sha = actions.getInput('sha')
 
