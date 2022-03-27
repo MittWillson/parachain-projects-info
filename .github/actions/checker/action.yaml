@@ -1,6 +1,9 @@
 name: "sign checker"
 description: "check sign"
 inputs:
+  sha:
+    required: true
+    description: PR SHA
   token:
     required: true
     description: Github Token

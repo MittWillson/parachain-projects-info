@@ -42,6 +42,8 @@ const main = async () => {
     const githubToken = actions.getInput('token')
     const sha = actions.getInput('sha')
 
+    console.log("main", githubToken, sha)
+
     const pr = await getPRContent(githubToken, sha)
 
     console.log("changes", changes)
