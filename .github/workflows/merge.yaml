@@ -45,6 +45,7 @@ jobs:
             git push origin HEAD:$BOT_BRANCH_SYNC
             
             curl \
+              -u -u ${{ secrets.GIT_USER }}:${{ secrets.GIT_TOKEN }} \
               -X POST \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/subscan-explorer/ui/pulls \
