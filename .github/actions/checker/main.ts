@@ -14,7 +14,7 @@ const isValidSignature = (signedMessage, signature, address) => {
 };
 
 const getPRContent = async (token: string, sha: string) => {
-    console.log(token, sha)
+    console.log('getPRContent', token, sha)
     const octKit = getOctokit(token)
     const result = await octKit.rest.repos.listPullRequestsAssociatedWithCommit({
         owner: context.repo.owner,
