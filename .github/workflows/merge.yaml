@@ -3,9 +3,9 @@ on:
   pull_request_target:
     branches: [master, main]
     types: [closed]
-    paths:
-      - networks/**
-      - assets/**
+#    paths:
+#      - networks/**
+#      - assets/**
 
 jobs:
   sync:
