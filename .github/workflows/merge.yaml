@@ -3,14 +3,14 @@ on:
   pull_request:
     branches: [master, main]
 #    types: [closed]
-#    paths:
-#      - networks/**
-#      - assets/**
+    paths:
+      - networks/**
+      - assets/**
 
 jobs:
   sync:
     name: Sync Infos
-    if: github.event.pull_request.merged == 'true'
+#    if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
