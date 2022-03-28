@@ -2,7 +2,7 @@ name: Networks info updates
 on:
   pull_request:
     branches: [master, main]
-    types: [closed]
+#    types: [closed]
     paths:
       - networks/**
       - assets/**
