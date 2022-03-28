@@ -1,5 +1,5 @@
 {
-  "ParaID": "20281",
+  "ParaID": "202812",
   "Project Name": "Ares Odyssey",
   "Logo": "../../assets/images/ares-logo.png",
   "Description (en)": "Ares Protocol is a decentralized cross-chain oracle platform that introduces a truly new generation of cross-chain oracle service protocols with on-chain data verification, and is the first to open a compensation channel for data users in case they suffer business losses due to the use of data provided by the oracle. Ares Protocol is an oracle solution with security using VRF, developed on the Substrate framework, and it supports hybrid Babe and off-chain workers. It integrates Polkadot’s latest on-chain governance, brings the Optimistic Rollup challenge model into the oracle field, supports the Ink contract ecosystem, and brings better oracle services to DeFi Developers..",
